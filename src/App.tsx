@@ -1,9 +1,18 @@
-import * as React from 'react';
+import React from 'react';
+import { observer } from 'mobx-react';
+import DevTools from 'mobx-react-devtools';
+
+import { AppProps } from './types';
 import './App.css';
 
 const logo = require('./logo.svg');
 
-class App extends React.Component {
+@observer
+class App extends React.Component<AppProps, {}> {
+  onReset = () => {
+    this.props.appState.resetTimer();
+  };
+
   render() {
     return (
       <div className="App">
@@ -14,6 +23,12 @@ class App extends React.Component {
         <p className="App-intro">
           To get started, edit <code>src/App.tsx</code> and save to reload.
         </p>
+        <div>
+          <button onClick={this.onReset}>
+            Seconds passed: {this.props.appState.timer}
+          </button>
+          <DevTools />
+        </div>
       </div>
     );
   }
